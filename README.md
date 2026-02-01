@@ -3,7 +3,6 @@ marp: true
 theme: default
 ---
 # ChatGPT Clone
- 
 
 ---
 # Project Description
@@ -15,7 +14,7 @@ theme: default
 ## Frontend UI
 - Users should be able to easily access nontrivial features
 - Design should be simplistic and readable
-- Dashboard, Chatlogs, Messages, and so on
+- Dashboard, Chatlogs, Messages, and so on (multiple requirements)
 ---
 ## Server
 - Websocket
