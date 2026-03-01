@@ -1,0 +1,29 @@
+.chat-floating-container {
+  position: fixed;
+  bottom: 5vh;
+  right: 10vw;
+  width: min(80vw);
+  background: #E3E9C3;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.chat-input {
+  width: 100%;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 8px;
+  border: 36346E solid 2px;
+  background: #36346E;
+  box-sizing: border-box
+}
+
+.chat-button {
+  background: #6E1512;
+  color: white;
+}
+
+.chat-button:hover {
+  background: #36346E;
+}
