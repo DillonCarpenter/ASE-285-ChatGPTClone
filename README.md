@@ -45,6 +45,11 @@ theme: default
 ## Working with Open AI
 - The app must be able to send API requests to Open AI, receive responses, and handle them accordingly
 ---
+## Search and Filter
+- Global Search Functionality that allows the user to search through all conversations
+- Search bar is persistent and always available for the user
+- In Conversation Search: Search within a conversation
+---
 ## Deployment
 ---
 ## Data Model and Architecture
