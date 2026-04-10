@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { db } from "./db";
 import ChatBox from "./components/ChatBox.jsx";
 import ChatHistory from "./components/ChatHistory.jsx";
 import ConversationList from "./components/ConversationList.jsx";
@@ -11,54 +12,72 @@ function App() {
     title: "My First Conversation",
     messages: []
   };
-  const [conversations, setConversations] = useState([initialConversation]);
+  const [conversations, setConversations] = useState([]);
   const [selectedConversationId, setSelectedConversationId] = useState(null);
-  const handleSend = async (message) => {
 
-    setConversations(prev => prev.map(conv =>
-      conv.id === selectedConversationId
-      ? { ...conv, messages: [...conv.messages, {
-          conversationId: conv.id,
-          sender: "client",
-          content: message
-        }] 
-      }
-      : conv
-    ));
+  const loadConversations = async () => {
+    const [convs, messages] = await Promise.all([
+      db.conversations.toArray(),
+      db.messages.toArray()
+    ]);
 
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message })
-      });
+    const grouped = convs.map(conv => ({
+      ...conv,
+      messages: messages.filter(m => m.conversationId === conv.id).sort((a, b) => a.timestamp - b.timestamp)
+    }));
 
-      const data = await response.json();
-
-      // add server reply
-      setConversations(prev => prev.map(conv =>
-        conv.id === selectedConversationId
-        ? { ...conv, messages: [...conv.messages, {
-            conversationId: conv.id,
-            sender: "server", 
-            content: data.reply
-          }] }
-        : conv
-        )
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    setConversations(grouped);
   };
-  const handleCreateConversation = (title) => {
+
+  useEffect(() => {
+    loadConversations();
+  }, []);
+
+
+  const handleSend = async (message) => {
+    const convId = selectedConversationId;
+
+    // 1. write user message to DB
+    await db.messages.add({
+      id: crypto.randomUUID(),
+      conversationId: convId,
+      sender: "client",
+      content: message,
+      timestamp: Date.now()
+    });
+
+    // 2. call server
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+
+    // 3. store server response
+    await db.messages.add({
+      id: crypto.randomUUID(),
+      conversationId: convId,
+      sender: "server",
+      content: data.reply,
+      timestamp: Date.now()
+    });
+
+    // 4. reload UI from DB
+    loadConversations();
+  };
+  const handleCreateConversation = async (title) => {
     const conversation = {
       id: crypto.randomUUID(),
       title,
-      messages: []
+      createdAt: Date.now()
     };
 
-    setConversations(prev => [...prev, conversation]);
+    await db.conversations.add(conversation);
+
     setSelectedConversationId(conversation.id);
+    loadConversations();
   };
 
   return (
