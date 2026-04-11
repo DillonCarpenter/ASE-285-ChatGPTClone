@@ -41,25 +41,27 @@ function App() {
     await db.messages.add({
       id: crypto.randomUUID(),
       conversationId: convId,
-      sender: "client",
+      sender: "user",
       content: message,
       timestamp: Date.now()
     });
+    //2. grab the entire conversation history from DB
+    const conversation = await db.messages.where("conversationId").equals(convId).sortBy("timestamp");
 
-    // 2. call server
+    // 3. call server
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ conversation })
     });
 
     const data = await response.json();
 
-    // 3. store server response
+    // 4. store server response
     await db.messages.add({
       id: crypto.randomUUID(),
       conversationId: convId,
-      sender: "server",
+      sender: "assistant",
       content: data.reply,
       timestamp: Date.now()
     });
@@ -80,6 +82,16 @@ function App() {
     loadConversations();
   };
 
+  const deleteConversation = async (id) => {
+    await db.conversations.delete(id);
+    await db.messages.where("conversationId").equals(id).delete();
+    // What if they delete conversation they have selected?
+    if (selectedConversationId === id) {
+      setSelectedConversationId(null);
+    }
+    loadConversations();
+  }
+
   return (
     <div className="App">
       <h1>React + Node.js Express</h1>
@@ -89,6 +101,7 @@ function App() {
       <ConversationList
         conversations={conversations}
         onSelect={setSelectedConversationId}
+        onDelete={deleteConversation}
       />
       <NewConversationInput onCreate={handleCreateConversation} />
     </div>
