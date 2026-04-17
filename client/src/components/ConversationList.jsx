@@ -1,14 +1,28 @@
-function ConversationList({ conversations, onSelect }) {
+function ConversationList({ conversations, onSelect, onDelete }) {
   return (
     <div className="conversation-list">
       {conversations.map(conv => (
-        <button
+        <ConversationListItem
           key={conv.id}
-          onClick={() => onSelect(conv.id)}
-        >
-          {conv.title}
-        </button>
+          conv={conv}
+          onSelect={onSelect}
+          onDelete={onDelete}
+        />
       ))}
+    </div>
+  );
+}
+
+function ConversationListItem({ conv, onSelect, onDelete }) {
+  return (
+    <div className="conversation-item">
+      <button onClick={() => onSelect(conv.id)}>
+        {conv.title}
+      </button>
+
+      <button onClick={() => onDelete(conv.id)}>
+        Delete
+      </button>
     </div>
   );
 }
