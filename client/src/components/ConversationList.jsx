@@ -1,3 +1,5 @@
+import "../styles/ConversationList.css";
+
 function ConversationList({ conversations, onSelect, onDelete }) {
   return (
     <div className="conversation-list">
@@ -16,11 +18,11 @@ function ConversationList({ conversations, onSelect, onDelete }) {
 function ConversationListItem({ conv, onSelect, onDelete }) {
   return (
     <div className="conversation-item">
-      <button onClick={() => onSelect(conv.id)}>
+      <button className="conversation-title" onClick={() => onSelect(conv.id)}>
         {conv.title}
       </button>
 
-      <button onClick={() => onDelete(conv.id)}>
+      <button className="delete-btn" onClick={() => onDelete(conv.id)}>
         Delete
       </button>
     </div>

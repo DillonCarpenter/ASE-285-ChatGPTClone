@@ -1,0 +1,54 @@
+.conversation-list {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.conversation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 8px 10px;
+  border-radius: 6px;
+
+  cursor: pointer;
+  border-color: black;
+  border: 1px solid;
+}
+
+.conversation-title {
+  font-size: 14px;
+  background: none;
+  border: none;
+  text-align: left;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  border-color: black;
+  border: 1px solid;
+}
+
+.conversation-item:hover {
+  background-color: #e6f0ff;
+}
+.conversation-item.active {
+  background-color: #f7f0f0;
+}
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  opacity: 0.5;
+  cursor: pointer;
+  border-color: black;
+  border: 1px solid;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+}
