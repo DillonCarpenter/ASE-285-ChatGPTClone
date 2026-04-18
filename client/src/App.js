@@ -4,6 +4,7 @@ import ChatBox from "./components/ChatBox.jsx";
 import ChatHistory from "./components/ChatHistory.jsx";
 import ConversationList from "./components/ConversationList.jsx";
 import NewConversationInput from "./components/NewConversationInput.jsx";
+import "./App.css";
 
 
 function App() {
@@ -93,17 +94,27 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <h1>React + Node.js Express</h1>
+    <div className="app">
+      <div className="sidebar">
+        <NewConversationInput onCreate={handleCreateConversation} />
+        <ConversationList
+          conversations={conversations}
+          onSelect={setSelectedConversationId}
+          onDelete={deleteConversation}
+        />
+      </div>
 
-      <ChatHistory messages={conversations.find(c => c.id === selectedConversationId)?.messages || []} />
-      <ChatBox onSend={handleSend} />
-      <ConversationList
-        conversations={conversations}
-        onSelect={setSelectedConversationId}
-        onDelete={deleteConversation}
-      />
-      <NewConversationInput onCreate={handleCreateConversation} />
+      <div className="main">
+        <ChatHistory
+          messages={
+            conversations.find(c => c.id === selectedConversationId)?.messages || []
+          }
+        />
+      </div>
+
+      {selectedConversationId && (
+        <ChatBox onSend={handleSend} />
+      )}
     </div>
   );
 }

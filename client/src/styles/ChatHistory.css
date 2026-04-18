@@ -1,0 +1,33 @@
+.chat-history {
+  height: 100%;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.chat-message {
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 70%;
+  border-color: black;
+  border: 1px solid;
+}
+.chat-sender {
+  font-size: 14px;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+.chat-content {
+  font-size: 18px;
+  line-height: 1.5;
+}
+.chat-message.user {
+  align-self: flex-end;
+  background: #e6f0ff;
+}
+
+.chat-message.assistant {
+  align-self: flex-start;
+  background: #f7f0f0;
+}
