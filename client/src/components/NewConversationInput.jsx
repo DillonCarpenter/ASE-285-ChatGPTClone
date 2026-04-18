@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "../styles/NewConversationInput.css";
 function NewConversationInput({ onCreate }) {
   const [title, setTitle] = useState("");
 
@@ -16,7 +16,10 @@ function NewConversationInput({ onCreate }) {
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Conversation title"
+        placeholder="New Conversation Title..."
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleCreate();
+        }}
       />
 
       <button onClick={handleCreate}>
