@@ -95,6 +95,9 @@ function App() {
 
   return (
     <div className="app">
+      <div className="app-header">
+        ChatGPT Clone
+      </div>
       <div className="sidebar">
         <NewConversationInput onCreate={handleCreateConversation} />
         <ConversationList

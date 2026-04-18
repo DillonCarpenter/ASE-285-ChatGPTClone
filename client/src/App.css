@@ -1,7 +1,7 @@
 .app {
   display: grid;
   grid-template-columns: 260px 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 4fr;
   height: 100vh;
 }
 
@@ -18,13 +18,16 @@
 
 .app-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 24px;
   color: white;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
 }
 
 .app-link {
@@ -43,6 +46,10 @@
   border-right: 1px solid #ddd;
   display: flex;
   flex-direction: column;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 3;
 }
 
 .main {
