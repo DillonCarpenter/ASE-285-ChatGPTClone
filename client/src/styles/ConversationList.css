@@ -4,6 +4,7 @@
   padding: 12px;
   gap: 6px;
   overflow-y: auto;
+  padding-bottom: 300px;
 }
 
 .conversation-item {
@@ -11,16 +12,15 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 8px 10px;
+  margin: 4px 5px;
+  padding: 2px 3px;
   border-radius: 6px;
 
   cursor: pointer;
-  border-color: black;
-  border: 1px solid;
 }
 
 .conversation-title {
-  font-size: 14px;
+  font-size: 15px;
   background: none;
   border: none;
   text-align: left;
@@ -29,8 +29,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-  border-color: black;
-  border: 1px solid;
 }
 
 .conversation-item:hover {
@@ -42,11 +40,9 @@
 .delete-btn {
   background: none;
   border: none;
-  font-size: 12px;
+  font-size: 13px;
   opacity: 0.5;
   cursor: pointer;
-  border-color: black;
-  border: 1px solid;
 }
 
 .delete-btn:hover {

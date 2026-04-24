@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-bottom: 300px;
 }
 .chat-message {
   padding: 8px 12px;
