@@ -1,0 +1,36 @@
+.new-conversation {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #eee;
+}
+
+.new-conversation input {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 14px;
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+
+  outline: none;
+}
+
+.new-conversation input:focus {
+  border-color: #999;
+}
+
+.new-conversation button {
+  padding: 8px 12px;
+  font-size: 14px;
+
+  border: none;
+  border-radius: 6px;
+
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.new-conversation button:hover {
+  background-color: #d5d5d5;
+}
