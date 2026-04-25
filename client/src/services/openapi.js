@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getApiKey } from "./db"; // Dexie helper
+import { getApiKey } from "../db"; // Dexie helper
 
 export async function sendChat(conversation) {
   const apiKey = await getApiKey();
