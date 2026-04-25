@@ -5,9 +5,10 @@ import ChatHistory from "./components/ChatHistory.jsx";
 import ConversationList from "./components/ConversationList.jsx";
 import NewConversationInput from "./components/NewConversationInput.jsx";
 import "./App.css";
-import { sendChat } from "./openapi.js";
+import { sendChat } from "./services/openapi.js";
 import { getApiKey, saveApiKey } from "./db";
 import SetupScreen from "./components/SetupScreen.jsx";
+import { createConversation, deleteConversation, sendMessage } from "./services/conversationService";
 
 
 function App() {
@@ -45,50 +46,17 @@ function App() {
   };
 
   const handleSend = async (message) => {
-    const convId = selectedConversationId;
-
-    // 1. write user message to DB
-    await db.messages.add({
-      id: crypto.randomUUID(),
-      conversationId: convId,
-      sender: "user",
-      content: message,
-      timestamp: Date.now()
-    });
-    //2. grab the entire conversation history from DB
-    const conversation = await db.messages.where("conversationId").equals(convId).sortBy("timestamp");
-
-    // 3. call server
-    const data = await sendChat(conversation);
-
-    // 4. store server response
-    await db.messages.add({
-      id: crypto.randomUUID(),
-      conversationId: convId,
-      sender: "assistant",
-      content: data,
-      timestamp: Date.now()
-    });
-
-    // 4. reload UI from DB
-    loadConversations();
+    await sendMessage(selectedConversationId, message);
+    await loadConversations();
   };
   const handleCreateConversation = async (title) => {
-    const conversation = {
-      id: crypto.randomUUID(),
-      title,
-      createdAt: Date.now()
-    };
-
-    await db.conversations.add(conversation);
-
+    const conversation = await createConversation(title);
     setSelectedConversationId(conversation.id);
     loadConversations();
   };
 
   const deleteConversation = async (id) => {
-    await db.conversations.delete(id);
-    await db.messages.where("conversationId").equals(id).delete();
+    await deleteConversation(id);
     // What if they delete conversation they have selected?
     if (selectedConversationId === id) {
       setSelectedConversationId(null);

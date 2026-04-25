@@ -45,12 +45,17 @@ theme: default
 ## Working with Open AI
 - The app must be able to send API requests to Open AI, receive responses, and handle them accordingly - Completed
 ---
-## Deployment
-- Electron installer steps
-1. navigate to root, client and server folders and run npm install in all three destinations
-2. in root, run npm build then npm dist
+## Search and Filter
+- Global Search Functionality that allows the user to search through all conversations
+- Search bar is persistent and always available for the user
+- In Conversation Search: Search within a conversation
 ---
-## Data Model and Architecture
+## Deployment
+- Create an executable using electron and electron-builder - Completed
+- Replace the server with client requests to openai - Completed
+- Store api key in IndexedDB and prompt user for key - Completed
+---
+# Data Model and Architecture
 - Dexie.js to use Indexed DB. Axios is used to make calls to OpenAI and the last 10 messages of the conversation are passed to the model
 ---
 # Team Members and Roles
