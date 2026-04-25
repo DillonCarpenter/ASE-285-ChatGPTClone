@@ -1,0 +1,50 @@
+.conversation-list {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 6px;
+  overflow-y: auto;
+  padding-bottom: 300px;
+}
+
+.conversation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 4px 5px;
+  padding: 2px 3px;
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.conversation-title {
+  font-size: 15px;
+  background: none;
+  border: none;
+  text-align: left;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.conversation-item:hover {
+  background-color: #e6f0ff;
+}
+.conversation-item.active {
+  background-color: #f7f0f0;
+}
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+}

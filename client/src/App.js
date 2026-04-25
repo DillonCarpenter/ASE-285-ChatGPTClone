@@ -4,16 +4,16 @@ import ChatBox from "./components/ChatBox.jsx";
 import ChatHistory from "./components/ChatHistory.jsx";
 import ConversationList from "./components/ConversationList.jsx";
 import NewConversationInput from "./components/NewConversationInput.jsx";
+import "./App.css";
+import { sendChat } from "./openapi.js";
+import { getApiKey, saveApiKey } from "./db";
+import SetupScreen from "./components/SetupScreen.jsx";
 
 
 function App() {
-  const initialConversation = {
-    id: "1",
-    title: "My First Conversation",
-    messages: []
-  };
   const [conversations, setConversations] = useState([]);
   const [selectedConversationId, setSelectedConversationId] = useState(null);
+  const [apiKey, setApiKey] = useState(undefined); 
 
   const loadConversations = async () => {
     const [convs, messages] = await Promise.all([
@@ -31,8 +31,18 @@ function App() {
 
   useEffect(() => {
     loadConversations();
+    async function loadKey() {
+      const key = await getApiKey();
+      setApiKey(key);
+    }
+
+    loadKey();
   }, []);
 
+  const handleSaveApiKey = async (key) => {
+    await saveApiKey(key);
+    setApiKey(key);
+  };
 
   const handleSend = async (message) => {
     const convId = selectedConversationId;
@@ -49,20 +59,14 @@ function App() {
     const conversation = await db.messages.where("conversationId").equals(convId).sortBy("timestamp");
 
     // 3. call server
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ conversation })
-    });
-
-    const data = await response.json();
+    const data = await sendChat(conversation);
 
     // 4. store server response
     await db.messages.add({
       id: crypto.randomUUID(),
       conversationId: convId,
       sender: "assistant",
-      content: data.reply,
+      content: data,
       timestamp: Date.now()
     });
 
@@ -91,19 +95,36 @@ function App() {
     }
     loadConversations();
   }
+  if (!apiKey) {
+    return <SetupScreen onSave={handleSaveApiKey} />;
+  }
 
   return (
-    <div className="App">
-      <h1>React + Node.js Express</h1>
+    
+    <div className="app">
+      <div className="app-header">
+        ChatGPT Clone
+      </div>
+      <div className="sidebar">
+        <NewConversationInput onCreate={handleCreateConversation} />
+        <ConversationList
+          conversations={conversations}
+          onSelect={setSelectedConversationId}
+          onDelete={deleteConversation}
+        />
+      </div>
 
-      <ChatHistory messages={conversations.find(c => c.id === selectedConversationId)?.messages || []} />
-      <ChatBox onSend={handleSend} />
-      <ConversationList
-        conversations={conversations}
-        onSelect={setSelectedConversationId}
-        onDelete={deleteConversation}
-      />
-      <NewConversationInput onCreate={handleCreateConversation} />
+      <div className="main">
+        <ChatHistory
+          messages={
+            conversations.find(c => c.id === selectedConversationId)?.messages || []
+          }
+        />
+      </div>
+
+      {selectedConversationId && (
+        <ChatBox onSend={handleSend} />
+      )}
     </div>
   );
 }

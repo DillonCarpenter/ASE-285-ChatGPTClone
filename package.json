@@ -1,0 +1,40 @@
+{
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm start --prefix client\" \"electron .\"",
+    "build-client": "npm run build --prefix client",
+    "start": "electron .",
+    "dist": "electron-builder",
+    "build": "cd client && npm run build"
+  },
+  "build": {
+    "appId": "com.IDon'tHaveADomain.chatgpt-electron-app",
+    "productName": "ChatGPT Electron App",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "client/build/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0",
+    "electron": "^41.3.0",
+    "electron-builder": "^26.8.1"
+  },
+  "name": "chatgpt-electron-app",
+  "version": "1.0.0",
+  "description": "Your app description",
+  "author": "Your Name"
+}
