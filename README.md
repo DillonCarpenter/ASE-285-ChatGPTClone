@@ -13,7 +13,7 @@ theme: default
 ---
 ## Frontend UI
 - Users should be able to easily access nontrivial features - Completed
-- Design should be simplistic and readable
+- Design should be simplistic and readable - Completed I guess
 ---
 ## ChatBox
 - User can type out messages and send them to the server - Completed
@@ -33,33 +33,27 @@ theme: default
 - User can create a name for the conversation - Completed
 ---
 ## Server
-- HTTP Requests - In Progress
+- HTTP Requests - Completed
 - Express - Complete
-- Handles communication between the client and Open AI API - In Progress
+- Handles communication between the client and Open AI API - Completed
 ---
 ## Schema
 - Conversations - Completed
 - Chat Messages - Completed
-- User information
+- User information - Completed
 ---
 ## Working with Open AI
-- The app must be able to send API requests to Open AI, receive responses, and handle them accordingly
----
-## Search and Filter
-- Global Search Functionality that allows the user to search through all conversations
-- Search bar is persistent and always available for the user
-- In Conversation Search: Search within a conversation
+- The app must be able to send API requests to Open AI, receive responses, and handle them accordingly - Completed
 ---
 ## Deployment
+- Electron installer steps
+1. navigate to root, client and server folders and run npm install in all three destinations
+2. in root, run npm build then npm dist
 ---
 ## Data Model and Architecture
-
----
-# Tests
-
+- Dexie.js to use Indexed DB. Axios is used to make calls to OpenAI and the last 10 messages of the conversation are passed to the model
 ---
 # Team Members and Roles
 - Dillon Carpenter
   - Project Owner and developer
 ---
-# Links to documentation, code, and so on
